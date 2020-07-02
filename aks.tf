@@ -1,5 +1,5 @@
 // AKS cluster
-resource "azurerm_kubernetes_cluster" "main" {
+resource "azurerm_kubernetes_cluster" "aks_cluster" {
   name                = local.aks_name
   location            = var.location
   resource_group_name = var.resource_group_name
@@ -14,14 +14,8 @@ resource "azurerm_kubernetes_cluster" "main" {
       server_app_secret = var.role_based_access_control.server_app_secret
       tenant_id         = var.role_based_access_control.tenant_id
     }
-  }
-
-  linux_profile {
-    admin_username = var.admin_username
-    ssh_key {
-      key_data = replace(var.admin_public_ssh_key, "\n", "")
-    }
   } */
+
 
   default_node_pool {
     name                  = var.default_node_pool.name
@@ -54,9 +48,23 @@ resource "azurerm_kubernetes_cluster" "main" {
     load_balancer_sku  = var.network_profile.load_balancer_sku
   }
 
-  service_principal {
-    client_id     = var.service_principal.client_id
-    client_secret = var.service_principal.client_secret
+
+  dynamic "linux_profile" {
+    for_each = var.linux_profile
+    content {
+      admin_username = linux_profile.value.admin_username
+      ssh_key {
+        key_data = linux_profile.value.ssh_key.key_data
+      }
+    }
+  }
+
+  dynamic "service_principal" {
+    for_each = var.service_principal
+    content {
+      client_id     = service_principal.value.client_id
+      client_secret = service_principal.value.client_secret
+    }
   }
 
   /* addon_profile {

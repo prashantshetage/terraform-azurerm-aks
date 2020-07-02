@@ -147,7 +147,7 @@ variable "api_server_authorized_ip_ranges" {
 
 # Authentication and Authorization
 variable "role_based_access_control" {
-  type = object({
+  type = map(object({
     enabled = bool                    #(Required) Is Role Based Access Control Enabled
     azure_active_directory = object({ # (Optional) An azure_active_directory block
       client_app_id     = string
@@ -155,69 +155,52 @@ variable "role_based_access_control" {
       server_app_secret = string
       tenant_id         = string
     })
-  })
+  }))
   description = "(Optional) A role_based_access_control block"
+  default     = {}
+}
+variable "identity" {
+  type = map(object({
+    type = string #(Required) The type of identity used for the managed cluster
+  }))
+  description = "(Optional) Managed Identity to interact with Azure APIs"
   default = {
-    enabled = false
-    azure_active_directory = {
-      client_app_id     = null
-      server_app_id     = null
-      server_app_secret = null
-      tenant_id         = null
+    id1 = {
+      type = "SystemAssigned"
     }
   }
 }
-variable "identity" {
-  type = object({
-    type = string #(Required) The type of identity used for the managed cluster
-  })
-  description = "(Optional) Managed Identity to interact with Azure APIs"
-  default = {
-    type = "SystemAssigned"
-  }
-}
 variable "service_principal" {
-  type = object({
+  type = map(object({
     client_id     = string #(Required) The Client ID for the Service Principal
     client_secret = string #(Required) The Client Secret for the Service Principal.
-  })
+  }))
   description = "(Optional) Service principle to interact with Azure APIs"
-  default = {
-    client_id     = null
-    client_secret = null
-  }
+  default     = {}
 }
 variable "linux_profile" {
-  type = object({
+  type = map(object({
     admin_username = string #(Required) The Admin Username for the Cluster
     ssh_key = object({
       key_data = string #(Required) The Public SSH Key used to access the cluster
     })
-  })
+  }))
   description = "(Optional) SSH authentication parameter values"
-  default = {
-    admin_username = null
-    ssh_key = {
-      key_data = null
-    }
-  }
+  default     = {}
 }
 variable "windows_profile" {
-  type = object({
+  type = map(object({
     admin_username = string #(Required) The Admin Username for Windows VMs
     admin_password = string #(Required) The Admin Password for Windows VMs.
-  })
+  }))
   description = "(Optional) Windows Profile"
-  default = {
-    admin_username = null
-    admin_password = null
-  }
+  default     = {}
 }
 
 
 # Networking
 variable "network_profile" {
-  type = object({
+  type = map(object({
     network_plugin     = string #(Required) Network plugin to use for networking
     network_policy     = string #(Optional) Sets up network policy to be used with Azure CNI
     dns_service_ip     = string #(Optional) IP address within the Kubernetes service address range that will be used by cluster service discovery (kube-dns)
@@ -227,18 +210,9 @@ variable "network_profile" {
     outbound_type      = string #(Optional) The outbound (egress) routing method which should be used for this Kubernetes Cluster
     load_balancer_sku  = string #(Optional) Specifies the SKU of the Load Balancer used for this Kubernetes Cluster
     #load_balancer_profile = object({})
-  })
+  }))
   description = "(Optional) Variables defining the AKS network profile config"
-  default = {
-    network_plugin     = null
-    network_policy     = null
-    dns_service_ip     = null
-    docker_bridge_cidr = null
-    pod_cidr           = null
-    service_cidr       = null
-    outbound_type      = null
-    load_balancer_sku  = null
-  }
+  default = {}
 }
 variable "private_cluster_enabled" {
   type        = bool
