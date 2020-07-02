@@ -37,17 +37,19 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     max_count = var.default_node_pool_scaling.enable_auto_scaling ? var.default_node_pool_scaling.max_count : null
   }
 
-  network_profile {
-    network_plugin     = var.network_profile.network_plugin
-    network_policy     = var.network_profile.network_policy
-    dns_service_ip     = var.network_profile.dns_service_ip
-    docker_bridge_cidr = var.network_profile.docker_bridge_cidr
-    pod_cidr           = var.network_profile.pod_cidr
-    service_cidr       = var.network_profile.service_cidr
-    outbound_type      = var.network_profile.outbound_type
-    load_balancer_sku  = var.network_profile.load_balancer_sku
+  dynamic "network_profile" {
+    for_each = var.network_profile
+    content {
+      network_plugin     = network_profile.value.network_plugin
+      network_policy     = network_profile.value.network_policy
+      dns_service_ip     = network_profile.value.dns_service_ip
+      docker_bridge_cidr = network_profile.value.docker_bridge_cidr
+      pod_cidr           = network_profile.value.pod_cidr
+      service_cidr       = network_profile.value.service_cidr
+      outbound_type      = network_profile.value.outbound_type
+      load_balancer_sku  = network_profile.value.load_balancer_sku
+    }
   }
-
 
   dynamic "linux_profile" {
     for_each = var.linux_profile

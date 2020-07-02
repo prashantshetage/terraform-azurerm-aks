@@ -212,7 +212,7 @@ variable "network_profile" {
     #load_balancer_profile = object({})
   }))
   description = "(Optional) Variables defining the AKS network profile config"
-  default = {}
+  default     = {}
 }
 variable "private_cluster_enabled" {
   type        = bool
