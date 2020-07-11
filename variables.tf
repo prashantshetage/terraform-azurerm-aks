@@ -109,9 +109,9 @@ variable "addon_profile_kube_dashboard" {
   type = object({
     enabled = bool #(Required) Is the Kubernetes Dashboard enabled?
   })
-  description = "TBD"
+  description = "(Optional) Enable/Disable default Kubernetes dashboard"
   default = {
-    enabled = false
+    enabled = true
   }
 }
 variable "addon_profile_oms_agent" {
@@ -120,7 +120,7 @@ variable "addon_profile_oms_agent" {
     log_analytics_workspace_id = string #(Optional) The ID of the Log Analytics Workspace which the OMS Agent should send data to.
     #oms_agent_identity
   })
-  description = "TBD"
+  description = "(Optional) Send AKS logs to OMS/Log Analytics Workspace"
   default = {
     enabled                    = false
     log_analytics_workspace_id = null
