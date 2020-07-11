@@ -69,12 +69,22 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     }
   }
 
-  /* addon_profile {
+  addon_profile {
     oms_agent {
-      enabled                    = true
-      log_analytics_workspace_id = var.log_analytics_workspace_id
+      enabled                    = var.addon_profile_oms_agent.enabled
+      log_analytics_workspace_id = var.addon_profile_oms_agent.log_analytics_workspace_id
     }
-  } */
+    kube_dashboard {
+      enabled = var.addon_profile_kube_dashboard.enabled
+    }
+    /* dynamic "oms_agent" {
+      for_each = var.addon_profile_oms_agent
+      content {
+        enabled                    = oms_agent.value.enabled
+        log_analytics_workspace_id = oms_agent.value.log_analytics_workspace_id
+      }
+    } */
+  }
 
   tags       = merge(var.resource_tags, var.deployment_tags)
   depends_on = [var.it_depends_on]
