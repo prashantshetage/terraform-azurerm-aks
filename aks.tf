@@ -61,6 +61,13 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     }
   }
 
+  dynamic "identity" {
+    for_each = var.identity
+    content {
+      type = each.value.type
+    }
+  }
+
   dynamic "service_principal" {
     for_each = var.service_principal
     content {
@@ -77,13 +84,9 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     kube_dashboard {
       enabled = var.addon_profile_kube_dashboard.enabled
     }
-    /* dynamic "oms_agent" {
-      for_each = var.addon_profile_oms_agent
-      content {
-        enabled                    = oms_agent.value.enabled
-        log_analytics_workspace_id = oms_agent.value.log_analytics_workspace_id
-      }
-    } */
+    http_application_routing {
+      enabled = var.addon_profile_http_application_routing.enabled
+    }
   }
 
   tags       = merge(var.resource_tags, var.deployment_tags)
