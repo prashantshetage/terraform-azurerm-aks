@@ -6,15 +6,22 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   dns_prefix          = var.dns_prefix
   kubernetes_version  = var.kubernetes_version
 
-  /*    role_based_access_control {
-    enabled = var.role_based_access_control.enabled
-    azure_active_directory {
-      client_app_id     = var.role_based_access_control.client_app_id
-      server_app_id     = var.role_based_access_control.server_app_id
-      server_app_secret = var.role_based_access_control.server_app_secret
-      tenant_id         = var.role_based_access_control.tenant_id
+  # Use merge maps & Locals to reduce inputs
+  dynamic "role_based_access_control" {
+    for_each = var.role_based_access_control
+    iterator = "rbac"
+    content {
+      enabled = rbac.value.enabled
+      azure_active_directory {
+        managed                = rbac.value.managed
+        admin_group_object_ids = rbac.value.admin_group_object_ids
+        client_app_id          = rbac.value.client_app_id
+        server_app_id          = rbac.value.server_app_id
+        server_app_secret      = rbac.value.server_app_secret
+        tenant_id              = rbac.value.tenant_id
+      }
     }
-  } */
+  }
 
 
   default_node_pool {
