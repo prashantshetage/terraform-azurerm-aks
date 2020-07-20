@@ -7,21 +7,34 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   kubernetes_version  = var.kubernetes_version
 
   # Use merge maps & Locals to reduce inputs
-  dynamic "role_based_access_control" {
-    for_each = var.role_based_access_control
-    iterator = "rbac"
-    content {
-      enabled = rbac.value.enabled
-      azure_active_directory {
-        managed                = rbac.value.managed
-        admin_group_object_ids = rbac.value.admin_group_object_ids
-        client_app_id          = rbac.value.client_app_id
-        server_app_id          = rbac.value.server_app_id
-        server_app_secret      = rbac.value.server_app_secret
-        tenant_id              = rbac.value.tenant_id
+  role_based_access_control {
+    enabled = var.rbac_enabled
+    dynamic "azure_active_directory" {
+      for_each = var.azure_active_directory
+      content {
+        managed                = azure_active_directory.value.managed
+        admin_group_object_ids = azure_active_directory.value.admin_group_object_ids
+        client_app_id          = azure_active_directory.value.client_app_id
+        server_app_id          = azure_active_directory.value.server_app_id
+        server_app_secret      = azure_active_directory.value.server_app_secret
+        tenant_id              = azure_active_directory.value.tenant_id
       }
     }
   }
+  /*  dynamic "role_based_access_control" {
+    for_each = var.role_based_access_control
+    content {
+      enabled = role_based_access_control.value.enabled
+      azure_active_directory {
+        managed                = role_based_access_control.value.azure_active_directory.managed
+        admin_group_object_ids = role_based_access_control.value.azure_active_directory.admin_group_object_ids
+        client_app_id          = role_based_access_control.value.azure_active_directory.client_app_id
+        server_app_id          = role_based_access_control.value.azure_active_directory.server_app_id
+        server_app_secret      = role_based_access_control.value.azure_active_directory.server_app_secret
+        tenant_id              = role_based_access_control.value.azure_active_directory.tenant_id
+      }
+    }
+  } */
 
 
   default_node_pool {

@@ -146,10 +146,27 @@ variable "api_server_authorized_ip_ranges" {
 
 
 # Authentication and Authorization
-variable "role_based_access_control" {
+variable "rbac_enabled" {
+  type        = bool
+  description = "(Optional) Enable/Disable role based access control on AKS cluter"
+  default     = false
+}
+variable "azure_active_directory" {
+  type = map(object({
+    managed                = bool         #(Optional)Is the Azure Active Directory integration Managed
+    admin_group_object_ids = list(string) #(Optional) A list of Object IDs of Azure Active Directory Groups which should have Admin Role on the Cluster
+    client_app_id          = string       #(Required) The Client ID of an Azure Active Directory Application
+    server_app_id          = string       #(Required) The Server ID of an Azure Active Directory Application
+    server_app_secret      = string       #(Required) The Server Secret of an Azure Active Directory Application
+    tenant_id              = string       #(Optional) The Tenant ID used for Azure Active Directory Application
+  }))
+  description = "(Optional) Configure Kubernetes (RBAC) based on a user's identity or directory group membership in Azure AD"
+  default     = {}
+}
+/* variable "role_based_access_control" {
   type = map(object({
     enabled = bool                          #(Required) Is Role Based Access Control Enabled
-    azure_active_directory = object({       # (Optional) An azure_active_directory block
+    azure_active_directory = object({       
       managed                = bool         #(Optional)Is the Azure Active Directory integration Managed
       admin_group_object_ids = list(string) #(Optional) A list of Object IDs of Azure Active Directory Groups which should have Admin Role on the Cluster
       client_app_id          = string       #(Required) The Client ID of an Azure Active Directory Application
@@ -160,7 +177,7 @@ variable "role_based_access_control" {
   }))
   description = "(Optional) A role_based_access_control block"
   default     = {}
-}
+} */
 variable "identity" {
   type = map(object({
     type = string #(Required) The type of identity used for the managed cluster
