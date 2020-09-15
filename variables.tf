@@ -243,7 +243,7 @@ variable "private_cluster_enabled" {
 variable "kubernetes_version" {
   type        = string
   description = "(Optional) Version of Kubernetes specified when creating the AKS managed cluster"
-  default     = "1.15.11"
+  default     = "1.16.13"
 }
 variable "sku_tier" {
   type        = string
