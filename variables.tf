@@ -32,7 +32,6 @@ variable "default_node_pool" {
     node_taints           = list(string) #(Optional) A list of Kubernetes taints which should be applied to nodes in the agent pool
     os_disk_size_gb       = number       #(Optional) The size of the OS Disk which should be used for each agent in the Node Pool
     type                  = string       #(Optional) The type of Node Pool which should be created. Possible values are AvailabilitySet and VirtualMachineScaleSets
-    vnet_subnet_id        = string       #(Optional) The ID of a Subnet where the Kubernetes Node Pool should exist
     node_count            = number       #(Optional) The initial number of nodes which should exist in this Node Pool
     orchestrator_version  = string       #(Optional) Version of Kubernetes used for the Agents
     tags                  = map(string)  #(Optional) A mapping of tags to assign to the Node Pool
@@ -48,12 +47,18 @@ variable "default_node_pool" {
     node_taints           = null #[]
     os_disk_size_gb       = null
     type                  = "VirtualMachineScaleSets"
-    vnet_subnet_id        = null
     node_count            = null
     orchestrator_version  = null
     tags                  = null #{}
   }
 }
+
+variable "vnet_subnet_id" {
+  type        = string
+  description = "(Optional) The ID of a Subnet where the Kubernetes Node Pool should exist"
+  default     = null
+}
+
 
 variable "default_node_pool_scaling" {
   type = object({

@@ -48,7 +48,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     node_taints           = var.default_node_pool.node_taints
     os_disk_size_gb       = var.default_node_pool.os_disk_size_gb
     type                  = var.default_node_pool.type
-    vnet_subnet_id        = var.default_node_pool.vnet_subnet_id
+    vnet_subnet_id        = var.vnet_subnet_id
     node_count            = var.default_node_pool.node_count
     orchestrator_version  = var.default_node_pool.orchestrator_version
     tags                  = var.default_node_pool.tags
