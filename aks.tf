@@ -90,6 +90,10 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     }
   }
 
+  /* identity {
+    type = var.identity_type
+  } */
+
   dynamic "service_principal" {
     for_each = var.service_principal
     content {

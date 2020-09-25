@@ -178,6 +178,16 @@ variable "azure_active_directory" {
   description = "(Optional) A role_based_access_control block"
   default     = {}
 } */
+variable "csi_with_aadpod_id" {
+  type        = bool
+  description = "(Optional) Do you want to deploy CSI Driver with AAD Pod Identity AUthentication?"
+  default     = false
+}
+/* variable "identity_type" {
+  type        = string
+  description = "(Optional) The type of identity used for the managed cluster"
+  default     = "SystemAssigned"
+} */
 variable "identity" {
   type = map(object({
     type = string #(Required) The type of identity used for the managed cluster
@@ -188,6 +198,33 @@ variable "identity" {
       type = "SystemAssigned"
     }
   }
+}
+variable "role_assignment_node_rg" {
+  type = map(object({
+    role_definition_id   = string #(Optional) The Scoped-ID of the Role Definition
+    role_definition_name = string #(Optional) The name of a built-in Role. Changing this forces a new resource to be created
+  }))
+  description = "(Optional) Role assignment to AKS's Managed Identity over Node Resource Group"
+  default = {
+    manged_id_operator = {
+      role_definition_id   = null
+      role_definition_name = "Managed Identity Operator"
+
+    },
+    vm_contributor = {
+      role_definition_id   = null
+      role_definition_name = "Virtual Machine Contributor"
+    }
+  }
+}
+variable "role_assignment_others" {
+  type = map(object({
+    scope                = string #(Required) The scope at which the Role Assignment applies to
+    role_definition_id   = string #(Optional) The Scoped-ID of the Role Definition
+    role_definition_name = string #(Optional) The name of a built-in Role. Changing this forces a new resource to be created
+  }))
+  description = "(Optional) Role assignment to AKS's Managed Identity over Node Resource Group"
+  default     = {}
 }
 variable "service_principal" {
   type = map(object({
