@@ -1,10 +1,12 @@
 // AKS cluster
 resource "azurerm_kubernetes_cluster" "aks_cluster" {
-  name                = local.aks_name
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  dns_prefix          = var.dns_prefix
-  kubernetes_version  = var.kubernetes_version
+  name                    = local.aks_name
+  location                = var.location
+  resource_group_name     = var.resource_group_name
+  dns_prefix              = var.dns_prefix
+  kubernetes_version      = var.kubernetes_version
+  private_cluster_enabled = var.private_cluster_enabled
+  #api_server_authorized_ip_ranges = var.api_server_authorized_ip_ranges
 
   # Use merge maps & Locals to reduce inputs
   role_based_access_control {
@@ -84,7 +86,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   dynamic "identity" {
     for_each = var.identity
     content {
-      type = each.value.type
+      type = identity.value.type
     }
   }
 

@@ -143,11 +143,6 @@ variable "disk_encryption_set_id" {
   description = "(Optional) The ID of the Disk Encryption Set which should be used for the Nodes and Volumes"
   default     = null
 }
-variable "api_server_authorized_ip_ranges" {
-  type        = list(string)
-  description = "(Optional) The IP ranges to whitelist for incoming traffic to the masters"
-  default     = []
-}
 
 
 # Authentication and Authorization
@@ -242,6 +237,11 @@ variable "private_cluster_enabled" {
   type        = bool
   description = "(Optional) Should this Kubernetes Cluster have it's API server only exposed on internal IP addresses?"
   default     = false
+}
+variable "api_server_authorized_ip_ranges" {
+  type        = list(string)
+  description = "(Optional) The IP ranges to whitelist for incoming traffic to the masters"
+  default     = []
 }
 
 # Management
