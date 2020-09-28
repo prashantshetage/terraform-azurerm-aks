@@ -285,7 +285,7 @@ variable "api_server_authorized_ip_ranges" {
 variable "kubernetes_version" {
   type        = string
   description = "(Optional) Version of Kubernetes specified when creating the AKS managed cluster"
-  default     = "1.16.13"
+  default     = "1.17.11"
 }
 variable "sku_tier" {
   type        = string
