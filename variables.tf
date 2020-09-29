@@ -190,7 +190,7 @@ variable "identity" {
   description = "(Optional) Managed Identity to interact with Azure APIs"
   default = {
     type = "SystemAssigned"
-    }
+  }
 }
 variable "role_assignment_node_rg" {
   type = map(object({
@@ -218,6 +218,11 @@ variable "role_assignment_others" {
   }))
   description = "(Optional) Role assignment to AKS's Managed Identity over Node Resource Group"
   default     = {}
+}
+variable "managed_id_resource_group" {
+  type        = string
+  description = "(Optional) The resource group of Managed Identity which will be used as AAD Pod ID"
+  default     = null
 }
 variable "service_principal" {
   type = object({
