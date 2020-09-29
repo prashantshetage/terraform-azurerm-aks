@@ -183,21 +183,14 @@ variable "csi_with_aadpod_id" {
   description = "(Optional) Do you want to deploy CSI Driver with AAD Pod Identity AUthentication?"
   default     = false
 }
-/* variable "identity_type" {
-  type        = string
-  description = "(Optional) The type of identity used for the managed cluster"
-  default     = "SystemAssigned"
-} */
 variable "identity" {
-  type = map(object({
+  type = object({
     type = string #(Required) The type of identity used for the managed cluster
-  }))
+  })
   description = "(Optional) Managed Identity to interact with Azure APIs"
   default = {
-    id1 = {
-      type = "SystemAssigned"
+    type = "SystemAssigned"
     }
-  }
 }
 variable "role_assignment_node_rg" {
   type = map(object({
@@ -227,12 +220,12 @@ variable "role_assignment_others" {
   default     = {}
 }
 variable "service_principal" {
-  type = map(object({
+  type = object({
     client_id     = string #(Required) The Client ID for the Service Principal
     client_secret = string #(Required) The Client Secret for the Service Principal.
-  }))
+  })
   description = "(Optional) Service principle to interact with Azure APIs"
-  default     = {}
+  default     = null
 }
 variable "linux_profile" {
   type = map(object({

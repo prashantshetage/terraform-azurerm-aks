@@ -84,18 +84,14 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   }
 
   dynamic "identity" {
-    for_each = var.identity
+    for_each = var.identity[*]
     content {
       type = identity.value.type
     }
   }
 
-  /* identity {
-    type = var.identity_type
-  } */
-
   dynamic "service_principal" {
-    for_each = var.service_principal
+    for_each = var.service_principal[*]
     content {
       client_id     = service_principal.value.client_id
       client_secret = service_principal.value.client_secret
