@@ -219,6 +219,11 @@ variable "role_assignment_others" {
   description = "(Optional) Role assignment to AKS's Managed Identity over Node Resource Group"
   default     = {}
 }
+variable "skip_service_principal_aad_check" {
+  type        = bool
+  description = "(Optional) skip_service_principal_aad_check"
+  default     = false
+}
 variable "managed_id_resource_group" {
   type        = string
   description = "(Optional) The resource group of Managed Identity which will be used as AAD Pod ID"
@@ -319,6 +324,18 @@ variable "auto_scaler_profile" {
     scale_down_unready               = "20m"
     scale_down_utilization_threshold = 0.5
   }
+}
+
+# Integrations
+variable "integrate_acr" {
+  type        = bool
+  description = "(Optional) Integrated ACR with this AKS Cluster"
+  default     = false
+}
+variable "acr_id" {
+  type        = string
+  description = "(Optional) The id of ACR to be integrated with this AKS Cluster"
+  default     = null
 }
 
 variable "aks_suffix" {
