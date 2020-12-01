@@ -103,9 +103,6 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
       enabled                    = var.addon_profile_oms_agent.enabled
       log_analytics_workspace_id = var.addon_profile_oms_agent.log_analytics_workspace_id
     }
-    kube_dashboard {
-      enabled = var.addon_profile_kube_dashboard.enabled
-    }
     http_application_routing {
       enabled = var.addon_profile_http_application_routing.enabled
     }

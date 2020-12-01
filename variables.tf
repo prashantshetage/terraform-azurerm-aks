@@ -110,15 +110,6 @@ variable "addon_profile_http_application_routing" {
     enabled = false
   }
 }
-variable "addon_profile_kube_dashboard" {
-  type = object({
-    enabled = bool #(Required) Is the Kubernetes Dashboard enabled?
-  })
-  description = "(Optional) Enable/Disable default Kubernetes dashboard"
-  default = {
-    enabled = true
-  }
-}
 variable "addon_profile_oms_agent" {
   type = object({
     enabled                    = bool   #(Required) Is the OMS Agent Enabled?
