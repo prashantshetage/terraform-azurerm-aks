@@ -41,10 +41,10 @@ resource "azurerm_role_assignment" "others" {
 
 // Role Assignment to SPN for ACR Image Pull
 resource "azurerm_role_assignment" "spn_acrpull" {
-  count                            = var.service_principal != null && var.integrate_acr ? 1 : 0
+  count                            = var.integrate_acr ? 1 : 0
   scope                            = var.acr_id
   role_definition_name             = "AcrPull"
-  principal_id                     = var.service_principal.client_id
+  principal_id                     = azurerm_kubernetes_cluster.aks_cluster.kubelet_identity[0].object_id
   skip_service_principal_aad_check = var.skip_service_principal_aad_check
 
   depends_on = [azurerm_kubernetes_cluster.aks_cluster]
