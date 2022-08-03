@@ -365,6 +365,12 @@ variable "timeout" {
   default     = "90m"
 }
 
+variable "node_pools" {
+  description = "Additional node pools"
+  type        = any
+  default     = {}
+}
+
 
 // Local Values
 locals {

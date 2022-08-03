@@ -130,3 +130,28 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
 //**********************************************************************************************
 
 
+
+// AKS Node Pool
+//**********************************************************************************************
+resource "azurerm_kubernetes_cluster_node_pool" "node_pool" {
+  for_each = var.node_pools
+
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_cluster.id
+  vnet_subnet_id        = var.vnet_subnet_id
+
+  name    = lookup(each.value, "name", null)
+  vm_size = lookup(each.value, "vm_size", null)
+  #availability_zones    = lookup(each.value, "availability_zones", null)
+  enable_node_public_ip = lookup(each.value, "enable_node_public_ip", null)
+  max_pods              = lookup(each.value, "max_pods", null)
+  node_labels           = lookup(each.value, "node_labels", null)
+  node_taints           = lookup(each.value, "node_taints", null)
+  os_type               = lookup(each.value, "os_type", null)
+  os_disk_size_gb       = lookup(each.value, "os_disk_size_gb", null)
+  node_count            = lookup(each.value, "node_count", null)
+  orchestrator_version  = lookup(each.value, "orchestrator_version", null)
+  tags                  = lookup(each.value, "tags", null)
+}
+//**********************************************************************************************
+
+
