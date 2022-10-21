@@ -9,7 +9,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   api_server_authorized_ip_ranges = var.api_server_authorized_ip_ranges
 
   # Use merge maps & Locals to reduce inputs
-  role_based_access_control {
+  /* role_based_access_control {
     enabled = var.rbac_enabled
     dynamic "azure_active_directory" {
       for_each = var.azure_active_directory
@@ -22,7 +22,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
         tenant_id              = azure_active_directory.value.tenant_id
       }
     }
-  }
+  } */
   /*  dynamic "role_based_access_control" {
     for_each = var.role_based_access_control
     content {
