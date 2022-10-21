@@ -98,7 +98,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     }
   }
 
-  addon_profile {
+  /* addon_profile {
     oms_agent {
       enabled                    = var.addon_profile_oms_agent.enabled
       log_analytics_workspace_id = var.addon_profile_oms_agent.log_analytics_workspace_id
@@ -106,7 +106,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     http_application_routing {
       enabled = var.addon_profile_http_application_routing.enabled
     }
-  }
+  } */
 
   tags       = merge(var.resource_tags, var.deployment_tags)
   depends_on = [var.it_depends_on]
