@@ -42,7 +42,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   default_node_pool {
     name                  = var.default_node_pool.name
     vm_size               = var.default_node_pool.vm_size
-    zones                 = var.default_node_pool.availability_zones
+    #zones                 = var.default_node_pool.availability_zones
     enable_auto_scaling   = var.default_node_pool_scaling.enable_auto_scaling
     enable_node_public_ip = var.default_node_pool.enable_node_public_ip
     max_pods              = var.default_node_pool.max_pods
