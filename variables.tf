@@ -317,7 +317,8 @@ variable "auto_scaler_profile" {
   }
 }
 
-# Integrations
+// Integrations
+# Azure Container Registry
 variable "integrate_acr" {
   type        = bool
   description = "(Optional) Integrated ACR with this AKS Cluster"
@@ -328,7 +329,27 @@ variable "acr_id" {
   description = "(Optional) The id of ACR to be integrated with this AKS Cluster"
   default     = null
 }
+# Azure Key Vault
+variable "key_vault_secrets_provider_enabled" {
+  type        = bool
+  description = "(Optional) Whether to use the Azure Key Vault Provider for Secrets Store CSI Driver in an AKS cluster. For more details: https://docs.microsoft.com/en-us/azure/aks/csi-secrets-store-driver"
+  default     = false
+  nullable    = false
+}
+variable "secret_rotation_enabled" {
+  type        = bool
+  description = "Is secret rotation enabled? This variable is only used when `key_vault_secrets_provider_enabled` is `true` and defaults to `false`"
+  default     = false
+  nullable    = false
+}
+variable "secret_rotation_interval" {
+  type        = string
+  description = "The interval to poll for secret rotation. This attribute is only set when `secret_rotation` is `true` and defaults to `2m`"
+  default     = "2m"
+  nullable    = false
+}
 
+# Naming Convention
 variable "aks_suffix" {
   type        = string
   description = "(Optional) Suffix for AKS cluster name"

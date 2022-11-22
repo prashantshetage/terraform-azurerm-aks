@@ -40,8 +40,8 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
 
 
   default_node_pool {
-    name                  = var.default_node_pool.name
-    vm_size               = var.default_node_pool.vm_size
+    name    = var.default_node_pool.name
+    vm_size = var.default_node_pool.vm_size
     #zones                 = var.default_node_pool.availability_zones
     enable_auto_scaling   = var.default_node_pool_scaling.enable_auto_scaling
     enable_node_public_ip = var.default_node_pool.enable_node_public_ip
@@ -97,6 +97,17 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
       client_secret = service_principal.value.client_secret
     }
   }
+
+
+  dynamic "key_vault_secrets_provider" {
+    for_each = var.key_vault_secrets_provider_enabled ? ["key_vault_secrets_provider"] : []
+
+    content {
+      secret_rotation_enabled  = var.secret_rotation_enabled
+      secret_rotation_interval = var.secret_rotation_interval
+    }
+  }
+
 
   /* addon_profile {
     oms_agent {
