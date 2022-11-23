@@ -84,9 +84,19 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   }
 
   dynamic "identity" {
-    for_each = var.identity[*]
+    for_each = var.service_principal == null ? [1] : []
     content {
-      type = identity.value.type
+      type         = var.identity_ids == [] ? "SystemAssigned" : "UserAssigned"
+      identity_ids = var.identity_ids
+    }
+  }
+
+  dynamic "kubelet_identity" {
+    for_each = var.identity_ids != [] ? [1] : []
+    content {
+      client_id                 = each.value.client_id
+      object_id                 = each.value.object_id
+      user_assigned_identity_id = element(var.identity_ids, 0)
     }
   }
 

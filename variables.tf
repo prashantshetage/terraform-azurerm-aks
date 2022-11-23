@@ -174,7 +174,7 @@ variable "csi_with_aadpod_id" {
   description = "(Optional) Do you want to deploy CSI Driver with AAD Pod Identity AUthentication?"
   default     = false
 }
-variable "identity" {
+/* variable "identity" {
   type = object({
     type = string #(Required) The type of identity used for the managed cluster
   })
@@ -182,6 +182,16 @@ variable "identity" {
   default = {
     type = "SystemAssigned"
   }
+} */
+/* variable "identity_type" {
+  type        = string
+  description = "(Required) Specifies the type of Managed Service Identity that should be configured on this Kubernetes Cluster."
+  default     = "SystemAssigned"
+} */
+variable "identity_ids" {
+  type        = list(string)
+  description = "(Optional) Specifies a list of User Assigned Managed Identity IDs to be assigned to this Kubernetes Cluster"
+  default     = []
 }
 variable "role_assignment_node_rg" {
   type = map(object({
