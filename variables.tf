@@ -193,6 +193,12 @@ variable "identity_ids" {
   description = "(Optional) Specifies a list of User Assigned Managed Identity IDs to be assigned to this Kubernetes Cluster"
   default     = []
 }
+variable "user_assigned_identity_id" {
+  type = object({
+    client_id = optional(string, null) #(Required) The Client ID of the user-defined Managed Identity to be assigned to the Kubelets. If not specified a Managed Identity is created automatically.
+    object_id = optional(string, null) #(Required) The Object ID of the user-defined Managed Identity assigned to the Kubelets
+  })
+}
 variable "role_assignment_node_rg" {
   type = map(object({
     role_definition_id   = string #(Optional) The Scoped-ID of the Role Definition
