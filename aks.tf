@@ -94,8 +94,8 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   dynamic "kubelet_identity" {
     for_each = var.identity_ids != [] || var.user_assigned_identity_id != null ? [1] : []
     content {
-      client_id                 = var.user_assigned_identity_id.client_id
-      object_id                 = var.user_assigned_identity_id.object_id
+      client_id                 = var.user_assigned_identity_id != null ? var.user_assigned_identity_id.client_id : null
+      object_id                 = var.user_assigned_identity_id != null ? var.user_assigned_identity_id.object_id : null
       user_assigned_identity_id = var.identity_ids != [] ? element(var.identity_ids, 0) : null
     }
   }

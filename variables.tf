@@ -198,7 +198,7 @@ variable "user_assigned_identity_id" {
     client_id = optional(string, null) #(Required) The Client ID of the user-defined Managed Identity to be assigned to the Kubelets. If not specified a Managed Identity is created automatically.
     object_id = optional(string, null) #(Required) The Object ID of the user-defined Managed Identity assigned to the Kubelets
   })
-  #default = null
+  default = null
 }
 variable "role_assignment_node_rg" {
   type = map(object({
