@@ -273,7 +273,17 @@ variable "windows_profile" {
   description = "(Optional) Windows Profile"
   default     = {}
 }
-
+variable "storage_profile" {
+  description = "(Optional) Storage configurations"
+  type        = any
+  default = {
+    blob_driver_enabled         = true
+    disk_driver_enabled         = true
+    disk_driver_version         = "v1"
+    file_driver_enabled         = true
+    snapshot_controller_enabled = true
+  }
+}
 
 # Networking
 variable "network_profile" {

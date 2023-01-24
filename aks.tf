@@ -83,6 +83,14 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     }
   }
 
+  dynamic "storage_profile" {
+    blob_driver_enabled         = var.storage_profile.blob_driver_enabled
+    disk_driver_enabled         = var.storage_profiledisk_driver_enabled
+    disk_driver_version         = var.storage_profiledisk_driver_version
+    file_driver_enabled         = var.storage_profilefile_driver_enabled
+    snapshot_controller_enabled = var.storage_profilesnapshot_controller_enabled
+  }
+
   dynamic "identity" {
     for_each = var.service_principal == null ? [1] : []
     content {
