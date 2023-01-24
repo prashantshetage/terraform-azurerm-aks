@@ -87,10 +87,10 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     for_each = var.storage_profile != null ? var.storage_profile : {}
     content {
       blob_driver_enabled         = var.storage_profile.blob_driver_enabled
-      disk_driver_enabled         = var.storage_profiledisk_driver_enabled
-      disk_driver_version         = var.storage_profiledisk_driver_version
-      file_driver_enabled         = var.storage_profilefile_driver_enabled
-      snapshot_controller_enabled = var.storage_profilesnapshot_controller_enabled
+      disk_driver_enabled         = var.storage_profile.disk_driver_enabled
+      disk_driver_version         = var.storage_profile.disk_driver_version
+      file_driver_enabled         = var.storage_profile.file_driver_enabled
+      snapshot_controller_enabled = var.storage_profile.snapshot_controller_enabled
     }
   }
 
