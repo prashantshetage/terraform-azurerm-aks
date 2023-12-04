@@ -137,11 +137,6 @@ variable "disk_encryption_set_id" {
 
 
 # Authentication and Authorization
-variable "rbac_enabled" {
-  type        = bool
-  description = "(Optional) Enable/Disable role based access control on AKS cluter"
-  default     = false
-}
 variable "azure_active_directory" {
   type = map(object({
     managed                = bool         #(Optional)Is the Azure Active Directory integration Managed
