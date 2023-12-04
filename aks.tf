@@ -10,7 +10,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   role_based_access_control_enabled = var.role_based_access_control_enabled
 
   # Use merge maps & Locals to reduce inputs
-  dynamic "azure_active_directory_role_based_access_control" {
+  /* dynamic "azure_active_directory_role_based_access_control" {
     for_each = var.azure_active_directory
     content {
       managed                = azure_active_directory.value.managed
@@ -21,7 +21,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
       tenant_id              = azure_active_directory.value.tenant_id
       azure_rbac_enabled     = azure_active_directory.value.azure_rbac_enabled
     }
-  }
+  } */
   /*  dynamic "role_based_access_control" {
     for_each = var.role_based_access_control
     content {
