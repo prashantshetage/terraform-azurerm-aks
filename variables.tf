@@ -145,7 +145,7 @@ variable "azure_active_directory" {
     server_app_id          = string       #(Required) The Server ID of an Azure Active Directory Application
     server_app_secret      = string       #(Required) The Server Secret of an Azure Active Directory Application
     tenant_id              = string       #(Optional) The Tenant ID used for Azure Active Directory Application
-    azure_active_directory = string       #(Optional) Is Role Based Access Control based on Azure AD enabled?
+    azure_rbac_enabled     = string       #(Optional) Is Role Based Access Control based on Azure AD enabled?
   }))
   description = "(Optional) Configure Kubernetes (RBAC) based on a user's identity or directory group membership in Azure AD"
   default     = {}
