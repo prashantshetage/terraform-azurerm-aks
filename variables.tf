@@ -150,6 +150,7 @@ variable "azure_active_directory" {
     server_app_id          = string       #(Required) The Server ID of an Azure Active Directory Application
     server_app_secret      = string       #(Required) The Server Secret of an Azure Active Directory Application
     tenant_id              = string       #(Optional) The Tenant ID used for Azure Active Directory Application
+    azure_active_directory = string       #(Optional) Is Role Based Access Control based on Azure AD enabled?
   }))
   description = "(Optional) Configure Kubernetes (RBAC) based on a user's identity or directory group membership in Azure AD"
   default     = {}
@@ -310,6 +311,11 @@ variable "api_server_authorized_ip_ranges" {
   type        = list(string)
   description = "(Optional) The IP ranges to whitelist for incoming traffic to the masters"
   default     = []
+}
+variable "role_based_access_control_enabled" {
+  type        = bool
+  description = "Optional) Whether Role Based Access Control for the Kubernetes Cluster should be enabled. Defaults to true"
+  default     = true
 }
 
 # Management

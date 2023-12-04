@@ -1,28 +1,27 @@
 // AKS cluster
 resource "azurerm_kubernetes_cluster" "aks_cluster" {
-  name                            = local.aks_name
-  location                        = var.location
-  resource_group_name             = var.resource_group_name
-  dns_prefix                      = var.dns_prefix
-  kubernetes_version              = var.kubernetes_version
-  private_cluster_enabled         = var.private_cluster_enabled
-  api_server_authorized_ip_ranges = var.api_server_authorized_ip_ranges
+  name                    = local.aks_name
+  location                = var.location
+  resource_group_name     = var.resource_group_name
+  dns_prefix              = var.dns_prefix
+  kubernetes_version      = var.kubernetes_version
+  private_cluster_enabled = var.private_cluster_enabled
+  #api_server_authorized_ip_ranges = var.api_server_authorized_ip_ranges
+  role_based_access_control_enabled = var.role_based_access_control_enabled
 
   # Use merge maps & Locals to reduce inputs
-  /* role_based_access_control {
-    enabled = var.rbac_enabled
-    dynamic "azure_active_directory" {
-      for_each = var.azure_active_directory
-      content {
-        managed                = azure_active_directory.value.managed
-        admin_group_object_ids = azure_active_directory.value.admin_group_object_ids
-        client_app_id          = azure_active_directory.value.client_app_id
-        server_app_id          = azure_active_directory.value.server_app_id
-        server_app_secret      = azure_active_directory.value.server_app_secret
-        tenant_id              = azure_active_directory.value.tenant_id
-      }
+  dynamic "azure_active_directory_role_based_access_control" {
+    for_each = var.azure_active_directory
+    content {
+      managed                = azure_active_directory.value.managed
+      admin_group_object_ids = azure_active_directory.value.admin_group_object_ids
+      client_app_id          = azure_active_directory.value.client_app_id
+      server_app_id          = azure_active_directory.value.server_app_id
+      server_app_secret      = azure_active_directory.value.server_app_secret
+      tenant_id              = azure_active_directory.value.tenant_id
+      azure_rbac_enabled     = azure_active_directory.value.azure_rbac_enabled
     }
-  } */
+  }
   /*  dynamic "role_based_access_control" {
     for_each = var.role_based_access_control
     content {
